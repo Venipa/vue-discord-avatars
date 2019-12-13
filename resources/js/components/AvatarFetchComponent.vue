@@ -36,7 +36,8 @@
       </template>
       <div class="mt-4 d-flex flex-row align-items-center justify-content-center">
         <b-link href="https://github.com/Venipa"
-                class="mr-2" target="_blank">Github</b-link>
+                class="mr-2"
+                target="_blank">Github</b-link>
       </div>
     </div>
   </div>
@@ -58,6 +59,9 @@ export default {
   },
   computed: {
     status$() {
+      if (this.uid && !/^[0-9]*$/.test(this.uid)) {
+        return "Invalid UserID";
+      }
       const status = this.status;
       return status && status.type === "danger" ? status.text : null;
     }
@@ -72,6 +76,10 @@ export default {
     },
     updateAvatar() {
       const uid = this.uid;
+
+      if (!/^[0-9]*$/.test(uid)) {
+        return;
+      }
       this.isLoading = true;
       axios
         .get("/api/v1/user/avatar", {
