@@ -69,6 +69,11 @@
 </template>
 
 <script>
+function setQueryStringParameter(name, value) {
+    const params = new URLSearchParams(window.location.search);
+    params.set(name, value);
+    window.history.replaceState({}, "", decodeURIComponent(`${window.location.pathname}?${params}`));
+}
 const defaultData = () => ({
     uid: null,
     avatar: null,
@@ -102,6 +107,7 @@ export default {
             this.uid = uid;
             this.updateAvatar();
         },
+
         updateAvatar() {
             const uid = this.uid;
 
@@ -141,6 +147,7 @@ export default {
                     }
                     localStorage.lastUids = JSON.stringify(this.lastUids);
                     this.isLoading = false;
+                    setQueryStringParameter('id', uid);
                 })
                 .catch(err => {
                     const errors = err?.response?.data?.errors;
