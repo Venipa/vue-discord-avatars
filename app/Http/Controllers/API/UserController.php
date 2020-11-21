@@ -21,7 +21,7 @@ class UserController extends Controller
             return response()->json(['errors' => $v->errors()], 403);
         }
         $discord = new DiscordClient([
-            'token' => env('DISCORD_BOT_SECRET')
+            'token' => config('discord.secret')
         ]);
         if (Cache::has('discord-user:avatar:' . $r->query('uid'))) {
             return response()->json(Cache::get('discord-user:avatar:' . $r->query('uid')));
