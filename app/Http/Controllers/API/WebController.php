@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 
 class WebController extends Controller
 {
-    public function index() {
-        return view('index');
+    public function index(Request $r)
+    {
+        $id = $r->query('id');
+        return view('index')->with(['userId' =>  $id != null && preg_match("/^[0-9]*$/", $id) ? $r->input('id') : null]);
     }
 }
