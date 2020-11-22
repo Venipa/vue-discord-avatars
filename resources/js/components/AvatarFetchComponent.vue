@@ -69,10 +69,10 @@
 </template>
 
 <script>
-function setQueryStringParameter(name, value) {
+function setQueryStringParameter(name, value, replace = false) {
     const params = new URLSearchParams(window.location.search);
     params.set(name, value);
-    window.history.replaceState({}, "", decodeURIComponent(`${window.location.pathname}?${params}`));
+    (replace ? window.history.replaceState : window.history.pushState)({}, "", decodeURIComponent(`${window.location.pathname}?${params}`));
 }
 const defaultData = () => ({
     uid: null,
